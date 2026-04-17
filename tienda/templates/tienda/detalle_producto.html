@@ -1,14 +1,31 @@
 {% extends "tienda/base.html" %}
 
-{% block title %}{{ producto.nombre }}{% endblock %}
+{% block title %}Ficha Técnica: {{ producto.nombre }}{% endblock %}
 
 {% block content %}
-<h1>{{ producto.nombre }}</h1>
-<p>{{ producto.descripcion }}</p>
-<p><strong>Precio:</strong> ${{ producto.precio|floatformat:2 }}</p>
+<h1>Detalles del Producto</h1>
 
-<p>
-    <a href="{% url 'tienda:editar_producto' producto.pk %}" class="btn primary">Editar producto</a>
-    <a href="{% url 'tienda:eliminar_producto' producto.pk %}" class="btn delete">Eliminar producto</a>
-</p>
+<section>
+    <dl>
+        <dt><strong>Referencia (ID):</strong></dt>
+        <dd>{{ producto.pk }}</dd>
+        
+        <dt><strong>Nombre del artículo:</strong></dt>
+        <dd>{{ producto.nombre }}</dd>
+        
+        <dt><strong>Descripción:</strong></dt>
+        <dd>{{ producto.descripcion|default:"Sin descripción disponible" }}</dd>
+        
+        <dt><strong>Precio de venta:</strong></dt>
+        <dd><strong>${{ producto.precio }}</strong></dd>
+    </dl>
+</section>
+
+<hr>
+
+<nav style="margin-top: 20px;">
+    <a href="{% url 'tienda:lista_productos' %}">← Regresar al inventario</a> | 
+    <a href="{% url 'tienda:editar_producto' producto.pk %}">Modificar</a> | 
+    <a href="{% url 'tienda:eliminar_producto' producto.pk %}" style="color: red;">Eliminar</a>
+</nav>
 {% endblock %}
