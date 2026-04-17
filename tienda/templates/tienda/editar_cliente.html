@@ -1,14 +1,25 @@
 {% extends "tienda/base.html" %}
-{% block title %}Editar: {{ cliente.nombre }}{% endblock %}
+
+{% block title %}Editar Cliente{% endblock %}
 
 {% block content %}
-<h1>Editar cliente</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn primary">Actualizar</button>
-</form>
-<p>
-    <a href="{% url 'tienda:detalle_cliente' cliente.pk %}">Volver al detalle</a>
-</p>
+<h1>Modificar Datos del Cliente</h1>
+
+<div style="margin-top: 20px;">
+    <form method="post">
+        {% csrf_token %}
+        
+        <dl>
+            <dt><strong>Información Personal:</strong></dt>
+            <dd>{{ form.as_p }}</dd>
+        </dl>
+        
+        <hr>
+        
+        <nav style="margin-top: 20px;">
+            <button type="submit" style="padding: 5px 15px; cursor: pointer;">Guardar Cambios</button> | 
+            <a href="{% url 'tienda:lista_clientes' %}">Cancelar</a>
+        </nav>
+    </form>
+</div>
 {% endblock %}
