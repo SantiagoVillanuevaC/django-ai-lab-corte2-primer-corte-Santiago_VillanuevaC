@@ -1,13 +1,23 @@
 {% extends "tienda/base.html" %}
-{% block title %}Eliminar:{{ cliente.nombre }}{% endblock %}
+{% block title %}Eliminar cliente{% endblock %}
 
 {% block content %}
 <h1>Eliminar cliente</h1>
-<p>¿Está seguro de querer eliminar <strong>{{ cliente.nombre }}</strong>?</p>
 
-<form method="post">
+<dl class="detail-panel">
+    <dt>Nombre</dt>
+    <dd>{{ cliente.nombre }}</dd>
+    <dt>Email</dt>
+    <dd>{{ cliente.email }}</dd>
+</dl>
+
+<p class="empty-state">Si confirmas, se eliminará el cliente y <strong>todos sus pedidos</strong> asociados.</p>
+
+<form method="post" class="stacked-form">
     {% csrf_token %}
-    <button type="submit" class="btn primary">Sí, eliminar</button>
-    <a href="{% url 'tienda:detalle_cliente' cliente.pk %}" class="btn delete">Cancelar</a>
+    <p class="form-actions">
+        <button type="submit" class="btn primary danger">Eliminar definitivamente</button>
+        <a href="{% url 'tienda:detalle_cliente' cliente.pk %}" class="btn secondary">Cancelar</a>
+    </p>
 </form>
 {% endblock %}
