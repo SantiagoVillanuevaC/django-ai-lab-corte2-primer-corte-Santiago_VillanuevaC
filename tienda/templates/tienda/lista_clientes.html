@@ -1,18 +1,53 @@
 {% extends "tienda/base.html" %}
 
-{% block title %}Clientes{% endblock %}
+{% block title %}Lista de Clientes{% endblock %}
 
 {% block content %}
-    <h1>Clientes</h1>
-    <p>
-        <a href="{% url 'tienda:crear_cliente' %}" class="btn primary">Nuevo cliente</a>
-    </p>
-    <ul>
-        {% for c in clientes %}
-            <li>
-                <a href="{% url 'tienda:detalle_cliente' c.pk %}" >{{ c.nombre }}</a>
-                ({{ c.email }})
-            </li>
+<h1>Directorio de Clientes</h1>
+
+<nav style="margin-bottom: 20px;">
+    <a href="{% url 'tienda:crear_cliente' %}">[+] Registrar Nuevo Cliente</a>
+</nav>
+
+<table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
+    <thead>
+        <tr style="background-color: #f2f2f2;">
+            <th style="padding: 10px;">ID</th>
+            <th style="padding: 10px;">Nombre</th>
+            <th style="padding: 10px;">Correo Electrónico</th>
+            <th style="padding: 10px;">Estado</th>
+            <th style="padding: 10px;">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cliente in clientes %}
+        <tr>
+            <td style="padding: 10px;">{{ cliente.id }}</td>
+            <td style="padding: 10px;">{{ cliente.nombre }}</td>
+            <td style="padding: 10px;">{{ cliente.email }}</td>
+            <td style="padding: 10px;">
+                {% if cliente.activo %}
+                    Activo
+                {% else %}
+                    Inactivo
+                {% endif %}
+            </td>
+            <td style="padding: 10px;">
+                <a href="{% url 'tienda:detalle_cliente' cliente.pk %}">Ver</a> | 
+                <a href="{% url 'tienda:editar_cliente' cliente.pk %}">Editar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" style="padding: 20px; text-align: center;">
+                No hay clientes registrados en el sistema.
+            </td>
+        </tr>
         {% endfor %}
-    </ul>
+    </tbody>
+</table>
+
+<p style="margin-top: 20px;">
+    <a href="{% url 'tienda:home' %}">Volver al Inicio</a>
+</p>
 {% endblock %}
