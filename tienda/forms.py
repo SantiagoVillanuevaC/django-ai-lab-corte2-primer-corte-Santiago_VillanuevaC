@@ -47,7 +47,7 @@ class PedidoForm(forms.ModelForm):
         model = Pedido
         fields = ["cliente", "productos", "estado"]
         widgets = {
-            "productos": forms.SelectMultiple(attrs={"size": 10, "class": "select-multiple"}),
+            "productos": forms.SelectMultiple(attrs={"size": 8, "class": "select-multiple"}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -63,6 +63,7 @@ class PedidoItemForm(forms.ModelForm):
         model = PedidoItem
         fields = ["producto", "cantidad", "precio_unitario"]
         widgets = {
+            "producto": forms.Select(attrs={"size": 8}),
             "cantidad": forms.NumberInput(attrs={"min": 1}),
             "precio_unitario": forms.NumberInput(attrs={"step": 0.01}),
         }
