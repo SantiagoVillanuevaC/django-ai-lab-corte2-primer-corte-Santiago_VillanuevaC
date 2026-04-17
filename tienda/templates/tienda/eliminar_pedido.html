@@ -1,1 +1,35 @@
+{% extends "tienda/base.html" %}
 
+{% block title %}Cancelar Pedido #{{ pedido.id }}{% endblock %}
+
+{% block content %}
+<h1>Confirmar Cancelación de Pedido</h1>
+
+<section style="border: 1px solid #ccc; padding: 20px; background-color: #fffafa;">
+    <p>¿Estás seguro de que deseas eliminar el <strong>Pedido #{{ pedido.id }}</strong>?</p>
+    
+    <p>Detalles del pedido a borrar:</p>
+    <ul>
+        <li><strong>Cliente:</strong> {{ pedido.cliente.nombre }}</li>
+        <li><strong>Fecha:</strong> {{ pedido.fecha|date:"d/m/Y" }}</li>
+    </ul>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div style="margin-top: 20px;">
+            <button type="submit" style="background-color: #d9534f; color: white; border: none; padding: 10px 20px; cursor: pointer;">
+                Confirmar Eliminación
+            </button>
+            
+            <a href="{% url 'tienda:detalle_pedido' pedido.pk %}" style="margin-left: 15px;">
+                No, mantener pedido
+            </a>
+        </div>
+    </form>
+</section>
+
+<nav style="margin-top: 20px;">
+    <a href="{% url 'tienda:lista_pedidos' %}">← Volver al listado de pedidos</a>
+</nav>
+{% endblock %}
