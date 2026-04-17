@@ -1,14 +1,35 @@
 {% extends "tienda/base.html" %}
-{% block title %}Pedido # {{ pedido.id }} {% endblock %}
+
+{% block title %}Consulta de Pedido N°{{ pedido.id }}{% endblock %}
 
 {% block content %}
-<h1>Pedido # {{ pedido.id }}</h1>
-<p><b>Cliente:</b> {{ pedido.cliente.nombre }}</p>
-<p><b>Estado:</b> {{ pedido.estado }}</p>
-<h3>Productos</h3>
+<h1>Resumen del Pedido #{{ pedido.id }}</h1>
+
+<section>
+    <dl>
+        <dt><strong>Titular del pedido:</strong></dt>
+        <dd>{{ pedido.cliente.nombre }}</dd>
+        
+        <dt><strong>Registrado el:</strong></dt>
+        <dd>{{ pedido.fecha|date:"d/m/Y H:i" }}</dd>
+        
+        <dt><strong>Estado de la orden:</strong></dt>
+        <dd><em>{{ pedido.estado }}</em></dd>
+    </dl>
+</section>
+
+<hr>
+
+<h3>Artículos incluidos:</h3>
 <ul>
-    {% for p in pedido.productos.all %}
-        <li>{{ p.nombre }} - ${{ p.precio|floatformat:2 }}</li>
+    {% for producto in pedido.productos.all %}
+        <li>{{ producto.nombre }} — Valor unitario: ${{ producto.precio }}</li>
+    {% empty %}
+        <li>No hay productos asociados a esta orden.</li>
     {% endfor %}
 </ul>
+
+<nav style="margin-top: 20px;">
+    <a href="{% url 'tienda:lista_pedidos' %}">Ver todos los pedidos</a>
+</nav>
 {% endblock %}
