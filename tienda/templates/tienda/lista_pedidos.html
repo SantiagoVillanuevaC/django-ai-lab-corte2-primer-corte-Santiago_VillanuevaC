@@ -1,21 +1,32 @@
 {% extends "tienda/base.html" %}
-{% block title %}Lista de pedidos{% endblock %}
 
-{% block content%}
-<h1>Pedidos</h1>
-<ul>
-{% for p in pedidos %}
-    <li>
-        <a href="{% url 'tienda:detalle_pedido' p.pk %}">
-            Pedido #{{ p.id }}
-        </a>
-        - Cliente: {{ p.cliente.nombre }}
-        - Estado: {{ p.estado }}
-        - Fecha: {{ p.fecha|date:"d/m/Y" }}
-        - Productos: {{ p.productos.count }}
+{% block title %}Listado de pedidos{% endblock %}
+
+{% block content %}
+<h1>Listado de pedidos</h1>
+
+{% if pedidos %}
+<p class="toolbar">
+    <a class="btn primary" href="{% url 'tienda:crear_pedido' %}">Crear Pedido</a>
+</p>
+<ul class="list-cards">
+    {% for pedido in pedidos %}
+    <li class="list-card">
+        <div class="list-card__body">
+            <strong>Pedido #{{ pedido.pk }}</strong>
+            <span class="list-card__line">Cliente: {{ pedido.cliente.nombre }} ({{ pedido.cliente.email }})</span>
+            <span class="list-card__line">Estado: {{ pedido.get_estado_display }}</span>
+            <span class="list-card__line">Fecha: {{ pedido.fecha|date:"d/m/Y H:i" }} · {{ pedido.productos.count }} producto(s)</span>
+        </div>
+        <div class="list-card__actions">
+            <a class="btn primary" href="{% url 'tienda:detalle_pedido' pedido.pk %}">Ver detalle</a>
+            <a class="btn secondary" href="{% url 'tienda:editar_pedido' pedido.pk %}">Editar</a>
+            <a class="btn secondary" href="{% url 'tienda:eliminar_pedido' pedido.pk %}">Eliminar</a>
+        </div>
     </li>
-{% empty %}
-    <li>No hay productos disponibles</li>
-{% endfor %}
+    {% endfor %}
 </ul>
+{% else %}
+<p class="empty-state">No hay pedidos registrados.</p>
+{% endif %}
 {% endblock %}
