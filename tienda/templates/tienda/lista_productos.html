@@ -1,18 +1,42 @@
 {% extends "tienda/base.html" %}
 
-{% block title %}Productos{% endblock %}
+{% block title %}Inventario de Productos{% endblock %}
+
+{% block header_content %}
+    <h1>Listado de Productos</h1>
+{% endblock %}
 
 {% block content %}
-    <h1>Productos</h1>
-    <p>
-    <a href="{% url 'tienda:crear_producto' %}" class="btn primary">Nuevo producto</a>
-    </p>
-    <ul>
-        {% for p in productos %}
-            <li>
-                <a href="{% url 'tienda:detalle_producto' p.pk %}" >{{ p.nombre }}</a>
-                - ${{ p.precio|floatformat:2 }}
-            </li>
+<div class="toolbar" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+    <h3>Existencias en base de datos</h3>
+    <a href="{% url 'tienda:crear_producto' %}" style="background: #2980b9; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px;">+ Nuevo Producto</a>
+</div>
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+    <thead>
+        <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+            <th style="padding: 12px; text-align: left;">ID</th>
+            <th style="padding: 12px; text-align: left;">Nombre</th>
+            <th style="padding: 12px; text-align: left;">Precio</th>
+            <th style="padding: 12px; text-align: center;">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in productos %}
+        <tr style="border-bottom: 1px solid #eee;">
+            <td style="padding: 10px;">{{ producto.id }}</td>
+            <td style="padding: 10px;"><strong>{{ producto.nombre }}</strong></td>
+            <td style="padding: 10px;">${{ producto.precio }}</td>
+            <td style="padding: 10px; text-align: center;">
+                <a href="{% url 'tienda:detalle_producto' producto.pk %}" style="color: #3498db; margin: 0 5px;">Ver</a>
+                <a href="{% url 'tienda:editar_producto' producto.pk %}" style="color: #f39c12; margin: 0 5px;">Editar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" style="padding: 20px; text-align: center; color: #7f8c8d;">No hay productos registrados aún.</td>
+        </tr>
         {% endfor %}
-    </ul>
+    </tbody>
+</table>
 {% endblock %}
