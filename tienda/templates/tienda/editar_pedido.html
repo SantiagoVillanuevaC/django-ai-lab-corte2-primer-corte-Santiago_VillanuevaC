@@ -1,1 +1,27 @@
-<p>Formulario de edición en construcción.</p>
+{% extends "tienda/base.html" %}
+
+{% block title %}Editar Pedido #{{ pedido.id }}{% endblock %}
+
+{% block content %}
+<h1>Modificar Orden de Venta</h1>
+
+<div style="margin-top: 20px;">
+    <form method="post">
+        {% csrf_token %}
+        
+        <dl>
+            <dt><strong>Información del Pedido:</strong></dt>
+            <dd>{{ form.as_p }}</dd>
+        </dl>
+
+        <p><small>Tip: Usa la tecla Ctrl para seleccionar varios productos de la lista.</small></p>
+        
+        <hr>
+        
+        <nav style="margin-top: 20px;">
+            <button type="submit" style="padding: 5px 15px; cursor: pointer;">Actualizar</button> | 
+            <a href="{% url 'tienda:lista_pedidos' %}">Cancelar y volver</a>
+        </nav>
+    </form>
+</div>
+{% endblock %}
