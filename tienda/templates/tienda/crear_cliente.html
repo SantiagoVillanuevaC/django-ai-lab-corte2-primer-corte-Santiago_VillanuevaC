@@ -1,15 +1,22 @@
 {% extends "tienda/base.html" %}
-{% block title %}Crear cliente{% endblock %}
+
+{% block title %}Nuevo Cliente | Registro{% endblock %}
+
+{% block header_content %}
+    <h1 style="font-weight: 300;">Alta de Nuevo Cliente</h1>
+{% endblock %}
 
 {% block content %}
-<h1>Crear cliente</h1>
-<form method="POST">
-    {% csrf_token %}
-
-    <!-- Renderizado rápido: cada campo envuelto en <p> con labels y errores -->
-    {{ form.as_p }}
-
-    <button type="submit" class="btn primary">Guardar</button>
-</form>
-<p><a href="{% url 'tienda:lista_clientes' %}" >Volver a la lista</a></p>
+<div class="form-container" style="max-width: 600px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; border: 1px solid #e2e8f0;">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div style="margin-top: 20px;">
+            <button type="submit" style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                Confirmar Registro
+            </button>
+            <a href="{% url 'tienda:lista_clientes' %}" style="margin-left: 15px; color: #7f8c8d;">Volver al listado</a>
+        </div>
+    </form>
+</div>
 {% endblock %}
